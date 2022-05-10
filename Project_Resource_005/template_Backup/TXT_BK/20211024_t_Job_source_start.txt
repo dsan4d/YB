@@ -1,0 +1,28 @@
+##Start resource Job
+
+Import-module JAMS
+
+$RDR = "D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>\"
+
+if  (!(test-Path $RDR)) { 
+	"PATH_NOT_FOUND!!!!"
+} else {
+	$LATEST_STOP_FILE = (gci $RDR | select name | sort -Property name | select -last 1).NAME
+	
+	$resource = Get-Item "JAMS::localhost\Resources\<DWSJAMS_JobNameDWS>"
+
+	$Ltst_stop_file_Path = $RDR + "\\" + $LATEST_STOP_FILE
+
+    cat $Ltst_stop_file_Path
+
+	$input = Get-Content $Ltst_stop_file_Path
+
+	$resource.QuantityAvailable = $input
+
+	$resource.Update()
+
+}
+
+
+
+

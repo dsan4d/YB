@@ -1,0 +1,107 @@
+Import-module JAMS
+
+#Change this values to suit your needs:
+$SvrName = 'FDCVWAS0059D'
+$SvrName_2 = 'FDCVWAS0058D'
+
+$SvcName = 'Blue Prism Server'
+$SvcName_2 = 'Blue Login Agent'
+
+
+
+#Initialize variables:
+[string]$WaitForIt = ""
+[string]$Verb = ""
+[string]$Result = "FAILED"
+$svc = (get-service -computername $SvrName -name $SvcName)
+Write-host "$SvcName on $SvrName is $($svc.status)"
+Switch ($svc.status) {
+    'Stopped' {
+        Write-host "Starting $SvcName..."
+        $Verb = "start"
+        $WaitForIt = 'Running'
+        $svc.Start()}
+    'Running' {
+        Write-host "Stopping $SvcName..."
+        $Verb = "stop"
+        $WaitForIt = 'Stopped'
+        $svc.Stop()}
+    Default {
+        Write-host "$SvcName is $($svc.status).  Taking no action."}
+}
+if ($WaitForIt -ne "") {
+    Try {  # For some reason, we cannot use -ErrorAction after the next statement:
+        $svc.WaitForStatus($WaitForIt,'00:02:00')
+    } Catch {
+        Write-host "After waiting for 2 minutes, $SvcName failed to $Verb."
+    }
+    $svc = (get-service -computername $SvrName -name $SvcName)
+    if ($svc.status -eq $WaitForIt) {$Result = 'SUCCESS'}
+    Write-host "$Result`: $SvcName on $SvrName is $($svc.status)"
+}
+
+
+#Initialize variables:
+[string]$WaitForIt = ""
+[string]$Verb = ""
+[string]$Result = "FAILED"
+$svc = (get-service -computername $SvrName -name $SvcName)
+Write-host "$SvcName on $SvrName is $($svc.status)"
+Switch ($svc.status) {
+    'Stopped' {
+        Write-host "Starting $SvcName..."
+        $Verb = "start"
+        $WaitForIt = 'Running'
+        $svc.Start()}
+    'Running' {
+        Write-host "Stopping $SvcName..."
+        $Verb = "stop"
+        $WaitForIt = 'Stopped'
+        $svc.Stop()}
+    Default {
+        Write-host "$SvcName is $($svc.status).  Taking no action."}
+}
+if ($WaitForIt -ne "") {
+    Try {  # For some reason, we cannot use -ErrorAction after the next statement:
+        $svc.WaitForStatus($WaitForIt,'00:02:00')
+    } Catch {
+        Write-host "After waiting for 2 minutes, $SvcName failed to $Verb."
+    }
+    $svc = (get-service -computername $SvrName -name $SvcName)
+    if ($svc.status -eq $WaitForIt) {$Result = 'SUCCESS'}
+    Write-host "$Result`: $SvcName on $SvrName is $($svc.status)"
+}
+
+#Initialize variables:
+[string]$WaitForIt = ""
+[string]$Verb = ""
+[string]$Result = "FAILED"
+$svc = (get-service -computername $SvrName_2 -name $SvcName_2)
+Write-host "$SvcName_2 on $SvrName_2 is $($svc.status)"
+Switch ($svc.status) {
+    'Stopped' {
+        Write-host "Starting $SvcName_2..."
+        $Verb = "start"
+        $WaitForIt = 'Running'
+        $svc.Start()}
+    'Running' {
+        Write-host "Stopping $SvcName_2..."
+        $Verb = "stop"
+        $WaitForIt = 'Stopped'
+        $svc.Stop()}
+    Default {
+        Write-host "$SvcName_2 is $($svc.status).  Taking no action."}
+}
+if ($WaitForIt -ne "") {
+    Try {  # For some reason, we cannot use -ErrorAction after the next statement:
+        $svc.WaitForStatus($WaitForIt,'00:02:00')
+    } Catch {
+        Write-host "After waiting for 2 minutes, $SvcName_2 failed to $Verb."
+    }
+    $svc = (get-service -computername $SvrName_2 -name $SvcName_2)
+    if ($svc.status -eq $WaitForIt) {$Result = 'SUCCESS'}
+    Write-host "$Result`: $SvcName_2 on $SvrName_2 is $($svc.status)"
+}
+
+
+

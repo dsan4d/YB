@@ -1,0 +1,26 @@
+Import-module JAMS
+
+if (!(test-path "D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>")) {
+
+	New-Item -Path "D:\JAMS_Logs\Resources" -Name "<DWSJAMS_JobNameDWS>" -ItemType "directory"
+}
+
+$CrtDt = (Get-Date).tostring("yyyy_MM_dd__HH_mm")
+
+$Name = "<DWSJAMS_JobNameDWS>"
+
+$resource = Get-Item JAMS::localhost\Resources\"<DWSJAMS_JobNameDWS>"
+
+Write-Host $resource.QuantityAvailable
+
+$JOBName_STR = "<DWSJAMS_JobNameDWS>_$CrtDt"
+
+$QuantityAvailable_Path = "D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>\" + $JOBName_STR + ".txt"
+
+$resource.QuantityAvailable | Out-File -FilePath $QuantityAvailable_Path  -force
+
+$resource.QuantityAvailable = 0 
+
+$resource.Update()
+
+

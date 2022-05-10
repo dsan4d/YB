@@ -1,0 +1,22 @@
+﻿sc.exe FFVWJAMAS01D stop JAMSExecutor
+
+sc.exe FFVWJAMAS01D config JAMSExecutor start= Manual
+
+
+sc.exe FFVWJAMAS01D stop JAMSScheduler
+
+sc.exe FFVWJAMAS01D config JAMSScheduler start= Manual
+
+
+sc.exe FFVWJAMAS01D stop JAMSServer
+
+sc.exe FFVWJAMAS01D config JAMSServer start= Manual
+
+
+
+
+
+
+
+
+

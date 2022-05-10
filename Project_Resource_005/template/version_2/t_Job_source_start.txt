@@ -1,0 +1,17 @@
+##Start resource Job
+
+
+$LATEST_STOP_FILE = (gci D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>\* | select name | sort -Property name | select -last 1).NAME
+$LATEST_STOP_FILE
+CAT $LATEST_STOP_FILE
+
+Import-module JAMS
+
+$resource = Get-Item JAMS::localhost\Resources\<DWSJAMS_JobNameDWS>
+
+$input = Get-Content "D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>\$LATEST_STOP_FILE
+
+$resource.QuantityAvailable = $input
+
+$resource.Update
+

@@ -1,0 +1,13 @@
+##Start resource Job
+
+Import-module JAMS
+
+#$JAMS_Resources_Search_Path = Get-Item "JAMS::localhost\Resources\<DWSJAMS_JobNameDWS>\" + "<DWSJAMS_JobNameDWS>"
+
+$resource = Get-Item JAMS::localhost\Resources\<DWSJAMS_JobNameDWS>
+
+$input = Get-Content "D:\JAMS_Logs\Resources\<DWSJAMS_JobNameDWS>\<DWSJAMS_JobNameDWS>.txt"
+
+$resource.QuantityAvailable = $input
+
+$resource.Update()
